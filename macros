@@ -61,5 +61,11 @@ args1(20).Value = 1
 
 dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
 rem MsgBox args1(13).Value
-
+MsgBox StarDesktop.getImplementationName() rem возвращает полное имя данного объекта
+MsgBox document.getImplementationName()
+MsgBox dispatcher.getImplementationName()
+rem MsgBox args1(0).getImplementationName()
+MsgBox dispatcher.DBG_Properties
+MsgBox dispatcher.DBG_methods
+MsgBox dispatcher.DBG_SupportedInterfaces
 end sub
