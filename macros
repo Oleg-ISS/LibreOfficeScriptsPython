@@ -1,18 +1,19 @@
 REM  *****  BASIC  *****
-
-
 sub Main
 rem ----------------------------------------------------------------------
-rem define variables
+rem объявляем(создаем) переменные 
 dim document   as object
 dim dispatcher as object
-dim stroka_dlya_poiska as string
+dim stroka_dlya_poiska_1 as string
+dim stroka_dlya_poiska_2 as string
 dim adres_stroki as integer
 rem ----------------------------------------------------------------------
 rem get access to the document
 document   = ThisComponent.CurrentController.Frame
 dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
-stroka_dlya_poiska = "18,2*2,6"
+rem присваемваем переменным занчения
+stroka_dlya_poiska_1 = "183,74х3,53"
+stroka_dlya_poiska_2 = "140*3,5"
 
 rem ----------------------------------------------------------------------
 dim args1(20) as new com.sun.star.beans.PropertyValue
@@ -39,7 +40,7 @@ args1(9).Value = 0
 args1(10).Name = "SearchItem.SearchFlags"
 args1(10).Value = 0
 args1(11).Name = "SearchItem.SearchString"
-args1(11).Value = stroka_dlya_poiska
+args1(11).Value = stroka_dlya_poiska_1
 args1(12).Name = "SearchItem.ReplaceString"
 args1(12).Value = ""
 args1(13).Name = "SearchItem.Locale"
@@ -58,14 +59,70 @@ args1(19).Name = "SearchItem.SearchFormatted"
 args1(19).Value = false
 args1(20).Name = "SearchItem.AlgorithmType2"
 args1(20).Value = 1
-
+rem команда поиска строки
+dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
+args1(11).Value = stroka_dlya_poiska_2
 dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
 rem MsgBox args1(13).Value
-MsgBox StarDesktop.getImplementationName() rem возвращает полное имя данного объекта
-MsgBox document.getImplementationName()
-MsgBox dispatcher.getImplementationName()
+'MsgBox StarDesktop.getImplementationName() rem возвращает полное имя данного объекта
+'MsgBox document.getImplementationName()
+'MsgBox dispatcher.getImplementationName()
 rem MsgBox args1(0).getImplementationName()
-MsgBox dispatcher.DBG_Properties
-MsgBox dispatcher.DBG_methods
-MsgBox dispatcher.DBG_SupportedInterfaces
+'MsgBox document.DBG_Properties
+'MsgBox document.DBG_methods
+'MsgBox document.DBG_SupportedInterfaces
+RetrieveTheActiveCell()
 end sub
+
+
+
+
+
+
+REM Author: Paolo Mantovani 
+REM email: mantovani.paolo@tin.it 
+Sub RetrieveTheActiveCell()
+  Dim oOldSelection 'The original selection of cell ranges
+  Dim oRanges        'A blank range created by the document
+  Dim oActiveCell   'The current active cell
+  Dim oConv          'The cell addres conversion service
+  Dim oActiveCellAddress as object
+  REM store the current selection
+  oOldSelection = ThisComponent.CurrentSelection
+
+  oRanges = ThisComponent.createInstance("com.sun.star.sheet.SheetCellRanges")
+  ThisComponent.CurrentController.Select(oRanges)
+  'get the active cell!
+  oActiveCell = ThisComponent.CurrentSelection
+  REM a nice service I've just found!! :-)
+  oConv = ThisComponent.createInstance("com.sun.star.table.CellAddressConversion")
+  oConv.Address = oActiveCell.getCellAddress()
+  oActiveCellAddress = oActiveCell.getCellAddress() 'передаем адрес активной ячейки как объект
+  Print oConv.UserInterfaceRepresentation
+  Print oConv.PersistentRepresentation
+ 
+ 
+  'restore the old selection (but loosing the previous active cell)
+  ThisComponent.CurrentController.Select(oOldSelection)
+   rem пытаемся узнать что это такое
+  'MsgBox oOldSelection.DBG_Properties
+  'MsgBox oOldSelection.DBG_methods
+  'MsgBox oOldSelection.DBG_SupportedInterfaces
+  ' oRanges.DBG_Properties
+  'MsgBox oRanges.DBG_methods
+  'MsgBox oRanges.DBG_SupportedInterfaces
+  'MsgBox oActiveCell.getImplementationName() rem возвращает полное имя данного объекта
+  'MsgBox oActiveCell.DBG_Properties
+  'MsgBox oActiveCell.DBG_methods
+  'MsgBox oActiveCell.DBG_SupportedInterfaces
+  'MsgBox oActiveCell.Value
+  'MsgBox oConv.DBG_Properties
+  'MsgBox oConv.DBG_methods
+  'MsgBox oConv.DBG_SupportedInterfaces 
+  'MsgBox oActiveCellAddress.getImplementationName() rem возвращает полное имя данного объекта
+  MsgBox oActiveCellAddress.DBG_Properties
+  'MsgBox oActiveCellAddress.DBG_methods
+  'MsgBox oActiveCellAddress.DBG_SupportedInterfaces
+  Print "столбец " + oActiveCellAddress.Column
+  Print "строка " + oActiveCellAddress.Row
+End Sub
