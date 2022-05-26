@@ -1,0 +1,21 @@
+sub Main
+rem ----------------------------------------------------------------------
+rem define variables
+dim document   as object
+dim dispatcher as object
+dim oSheet1 as object
+dim i as integer
+rem ----------------------------------------------------------------------
+rem get access to the document
+document   = ThisComponent.CurrentController.Frame
+dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
+'MsgBox ThisComponent.DBG_Properties
+'MsgBox ThisComponent.DBG_methods
+'MsgBox ThisComponent.DBG_SupportedInterfaces
+'Print StarDesktop.Sheets(2).GetCellByPosition(2,2).Value
+oSheet1 = ThisComponent.Sheets.getByIndex(1)
+
+For i = 0 To 10
+MsgBox oSheet1.GetCellByPosition(3,i).getString()
+Next i
+end sub
