@@ -3,8 +3,12 @@ rem ----------------------------------------------------------------------
 rem define variables
 dim document   as object
 dim dispatcher as object
-dim oSheet1 as object
+dim oSheet_invoice as object
+dim oSheet_template as object
 dim i as integer
+dim item as string
+dim size as string
+
 rem ----------------------------------------------------------------------
 rem get access to the document
 document   = ThisComponent.CurrentController.Frame
@@ -13,9 +17,16 @@ dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 'MsgBox ThisComponent.DBG_methods
 'MsgBox ThisComponent.DBG_SupportedInterfaces
 'Print StarDesktop.Sheets(2).GetCellByPosition(2,2).Value
-oSheet1 = ThisComponent.Sheets.getByIndex(1)
-
-For i = 0 To 10
-MsgBox oSheet1.GetCellByPosition(3,i).getString()
-Next i
+oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
+oSheet_template = ThisComponent.Sheets.getByName("template")
+For i = 0 To 50
+if oSheet_invoice.GetCellByPosition(1,i).getString() = "O-ring" Then
+	item = "Кольцо круглого сечения"
+End If
+size = 
+'oSheet_template.GetCellByPosition(3,i).SetString(oSheet_invoice.GetCellByPosition(2,i).getString())
+'Next i
+item = "Кольцо круглого сечения"
+size = "145,42х3,53"
+print item + size
 end sub
