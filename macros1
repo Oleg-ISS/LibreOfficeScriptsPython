@@ -1,6 +1,6 @@
 sub Main
 rem ----------------------------------------------------------------------
-rem define variables
+rem объявляем переменные
 dim document   as object
 dim dispatcher as object
 dim oSheet_invoice as object
@@ -20,8 +20,13 @@ dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
 oSheet_template = ThisComponent.Sheets.getByName("template")
 For i = 0 To 50
+rem переводчик
 if oSheet_invoice.GetCellByPosition(1,i).getString() = "O-ring" Then
 	item = "Кольцо круглого сечения"
+if oSheet_invoice.GetCellByPosition(1,i).getString() = "O-ring cord" Then
+	item = "Шнур круглого сечения"
+if oSheet_invoice.GetCellByPosition(1,i).getString() = "Oil Seal" Then
+	item = "Манжета армированная"	
 End If
 size = 
 'oSheet_template.GetCellByPosition(3,i).SetString(oSheet_invoice.GetCellByPosition(2,i).getString())
