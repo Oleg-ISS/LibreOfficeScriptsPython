@@ -8,7 +8,7 @@ dim oSheet_template as object
 dim i as integer
 dim item as string
 dim size as string
-
+dim counter as integer 'счетчик итэраций фаил цикла invoice
 rem ----------------------------------------------------------------------
 rem get access to the document
 document   = ThisComponent.CurrentController.Frame
@@ -19,13 +19,14 @@ dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 'Print StarDesktop.Sheets(2).GetCellByPosition(2,2).Value
 oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
 oSheet_template = ThisComponent.Sheets.getByName("template")
+rem начало цикла invoice
 For i = 0 To 50
 rem переводчик
 if oSheet_invoice.GetCellByPosition(1,i).getString() = "O-ring" Then
 	item = "Кольцо круглого сечения"
-if oSheet_invoice.GetCellByPosition(1,i).getString() = "O-ring cord" Then
+ElseIf oSheet_invoice.GetCellByPosition(1,i).getString() = "O-ring cord" Then
 	item = "Шнур круглого сечения"
-if oSheet_invoice.GetCellByPosition(1,i).getString() = "Oil Seal" Then
+ElseIf oSheet_invoice.GetCellByPosition(1,i).getString() = "Oil Seal" Then
 	item = "Манжета армированная"	
 End If
 size = 
