@@ -1,5 +1,3 @@
-REM  *****  BASIC  *****
-
 sub Main
 rem ----------------------------------------------------------------------
 rem объявляем переменные
@@ -9,9 +7,9 @@ dim oSheet_invoice as object
 dim oSheet_template as object
 dim i as integer
 dim item as string
-dim item as string
+dim size as string
 dim counter as integer 'счетчик итэраций фаил цикла invoice
-dim massiv(1) as string 'массив объектов для хранения item item
+dim new_size as string '
 rem ----------------------------------------------------------------------
 rem get access to the document
 document   = ThisComponent.CurrentController.Frame
@@ -26,8 +24,10 @@ rem начало цикла invoice
 For counter = 0 To 1
 rem переводчик
 if oSheet_invoice.GetCellByPosition(1,i).getString() = "O-ring" Then
+    size = oSheet_invoice.GetCellByPosition(2,i).getString()
 	item = "Кольцо круглого сечения"
-	massiv = translater(item, size) 'вызываем функцию translater , которая написана на питоне
+	new_size = translater(size) 'вызываем функцию translater , которая написана на питоне
+	print new_size
 ElseIf oSheet_invoice.GetCellByPosition(1,i).getString() = "O-ring cord" Then
 	item = "Шнур круглого сечения"
 ElseIf oSheet_invoice.GetCellByPosition(1,i).getString() = "Oil Seal" Then
@@ -38,8 +38,8 @@ Next counter
 
 
 end sub
-Function translater(item, size)
+Function translater(size)
     Dim myScript as Object
     myScript = ThisComponent.getScriptProvider().getScript("vnd.sun.star.script:translater.py$py_translater?language=Python&location=user")
-    translater = myScript.invoke(Array(item, size), Array(), Array() )
+    translater = myScript.invoke(Array(size), Array(), Array() )
 End Function
