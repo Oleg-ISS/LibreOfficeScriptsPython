@@ -1,3 +1,5 @@
+REM  *****  BASIC  *****
+
 sub Main
 rem ----------------------------------------------------------------------
 rem объявляем переменные
@@ -7,8 +9,9 @@ dim oSheet_invoice as object
 dim oSheet_template as object
 dim i as integer
 dim item as string
-dim size as string
+dim item as string
 dim counter as integer 'счетчик итэраций фаил цикла invoice
+dim massiv(1) as string 'массив объектов для хранения item item
 rem ----------------------------------------------------------------------
 rem get access to the document
 document   = ThisComponent.CurrentController.Frame
@@ -20,19 +23,23 @@ dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
 oSheet_template = ThisComponent.Sheets.getByName("template")
 rem начало цикла invoice
-For i = 0 To 50
+For counter = 0 To 1
 rem переводчик
 if oSheet_invoice.GetCellByPosition(1,i).getString() = "O-ring" Then
 	item = "Кольцо круглого сечения"
+	massiv = translater(item, size) 'вызываем функцию translater , которая написана на питоне
 ElseIf oSheet_invoice.GetCellByPosition(1,i).getString() = "O-ring cord" Then
 	item = "Шнур круглого сечения"
 ElseIf oSheet_invoice.GetCellByPosition(1,i).getString() = "Oil Seal" Then
 	item = "Манжета армированная"	
 End If
-size = 
 'oSheet_template.GetCellByPosition(3,i).SetString(oSheet_invoice.GetCellByPosition(2,i).getString())
-'Next i
-item = "Кольцо круглого сечения"
-size = "145,42х3,53"
-print item + size
+Next counter
+
+
 end sub
+Function translater(item, size)
+    Dim myScript as Object
+    myScript = ThisComponent.getScriptProvider().getScript("vnd.sun.star.script:translater.py$py_translater?language=Python&location=user")
+    translater = myScript.invoke(Array(item, size), Array(), Array() )
+End Function
