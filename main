@@ -4,22 +4,27 @@ dim dispatcher as object 'объявляем глобальную перемен
 dim document   as object 'объявляем глобальную переменную
 sub Main 'главная функция
 rem ----------------------------------------------------------------------
-
-
+rem объявляем переменные
 dim size as string 'переменная в которой храним размер
 dim oSheet_invoice as object 'переменная в которой храним лист invoice
 dim counter as integer 'переменная в которой храним номер строки для цикла
+dim SearchString, ReplaceString as string
+rem подключаемся к приложению
 document   = ThisComponent.CurrentController.Frame
 dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
-replace_xrus_to_zvezdochka
+rem меняем в файле инвойс символы и слова
+SearchString = "х"
+ReplaceString = "*"
+replace(SearchString, ReplaceString)
 rem ----------------------------------------------------------------------
 oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
-For counter = 0 To 36 'главный цикл, который шагает по строчкам листа invoice
+For counter = 0 To 10 'главный цикл, который шагает по строчкам листа invoice
  size = oSheet_invoice.GetCellByPosition(2,counter).getString()
  print size
 Next counter
-End sub 
-sub replace_xrus_to_zvezdochka 'процедура которая меняет символ x(русский) на *
+End sub
+rem ---------------------------------------------------------------------- 
+sub replace(ByVal SearchString as string, ByVal ReplaceString as string) 'процедура которая меняет 
 
 dim args1(20) as new com.sun.star.beans.PropertyValue
 args1(0).Name = "SearchItem.StyleFamily"
@@ -45,9 +50,9 @@ args1(9).Value = 0
 args1(10).Name = "SearchItem.SearchFlags"
 args1(10).Value = 0
 args1(11).Name = "SearchItem.SearchString"
-args1(11).Value = "х" 'русский символ хэ
+args1(11).Value = SearchString
 args1(12).Name = "SearchItem.ReplaceString"
-args1(12).Value = "*"
+args1(12).Value = ReplaceString
 args1(13).Name = "SearchItem.Locale"
 args1(13).Value = 255
 args1(14).Name = "SearchItem.ChangedChars"
@@ -93,9 +98,9 @@ args3(9).Value = 0
 args3(10).Name = "SearchItem.SearchFlags"
 args3(10).Value = 0
 args3(11).Name = "SearchItem.SearchString"
-args3(11).Value = "х"
+args3(11).Value = SearchString
 args3(12).Name = "SearchItem.ReplaceString"
-args3(12).Value = "*"
+args3(12).Value = ReplaceString
 args3(13).Name = "SearchItem.Locale"
 args3(13).Value = 255
 args3(14).Name = "SearchItem.ChangedChars"
@@ -114,7 +119,4 @@ args3(20).Name = "SearchItem.AlgorithmType2"
 args3(20).Value = 1
 
 dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args3())
-End sub
-sub replace_o_ring_kolcho '
-
 End sub
