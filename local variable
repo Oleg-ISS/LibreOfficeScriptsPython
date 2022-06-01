@@ -1,0 +1,13 @@
+rem передача локалной переменной по значению
+sub Main
+dim i as integer
+i = 1
+print i
+replace(i)
+print "this is i " + i
+end sub
+rem =========================
+sub replace(ByVal i As Long)
+i = i+100
+print i
+end sub
