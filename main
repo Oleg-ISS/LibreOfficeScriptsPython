@@ -11,6 +11,7 @@ dim counter as integer 'переменная в которой храним но
 dim SearchString, ReplaceString as string
 rem подключаемся к приложению
 document   = ThisComponent.CurrentController.Frame
+ThisComponent.getCurrentController.select(ThisComponent.getSheets().getByName("invoice"))'делаем активным лист invoice
 dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 rem меняем в файле инвойс символы и слова
 SearchString = "х"
