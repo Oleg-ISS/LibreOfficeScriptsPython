@@ -53,10 +53,11 @@ args1(16).Value = 2
 args1(17).Name = "SearchItem.TransliterateFlags"
 args1(17).Value = 256
 args1(18).Name = "SearchItem.Command"
-args1(18).Value = 1
+args1(18).Value = 0
 args1(19).Name = "SearchItem.SearchFormatted"
 args1(19).Value = false
 args1(20).Name = "SearchItem.AlgorithmType2"
 args1(20).Value = 1
+
 dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
 end sub
