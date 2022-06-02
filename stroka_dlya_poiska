@@ -1,19 +1,20 @@
 REM  *****  BASIC  *****
 
-
+dim dispatcher as object
+dim document   as object
 sub Main
 dim stroka_dlya_poiska as string
-dim dispatcher as object
 dim oSheet_invoice as object
 dim counter as integer
-ThisComponent.getCurrentController.select(ThisComponent.getSheets().getByName("DB"))'делаем активным лист invoice
+counter = 2
 dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
 stroka_dlya_poiska = oSheet_invoice.GetCellByPosition(1,counter).getString()+" "+oSheet_invoice.GetCellByPosition(4,counter).getString()+" "+oSheet_invoice.GetCellByPosition(2,counter).getString()
+ThisComponent.getCurrentController.select(ThisComponent.getSheets().getByName("DB"))'делаем активным лист DB
 searching(stroka_dlya_poiska)
 end sub
+rem---------------------------------------------------------------------------------------
 sub searching(ByVal SearchString as string) 'процедура которая меняет 
-
 dim args1(20) as new com.sun.star.beans.PropertyValue
 args1(0).Name = "SearchItem.StyleFamily"
 args1(0).Value = 2
@@ -40,7 +41,7 @@ args1(10).Value = 0
 args1(11).Name = "SearchItem.SearchString"
 args1(11).Value = SearchString
 args1(12).Name = "SearchItem.ReplaceString"
-args1(12).Value = ReplaceString
+args1(12).Value = ""
 args1(13).Name = "SearchItem.Locale"
 args1(13).Value = 255
 args1(14).Name = "SearchItem.ChangedChars"
