@@ -1,5 +1,5 @@
 REM  *****  BASIC  *****
-
+rem lдобавь в этот макрос процедуру(переводчик) , которая будет изменять лист invoice
 dim dispatcher as object
 dim document   as object
 sub Main
