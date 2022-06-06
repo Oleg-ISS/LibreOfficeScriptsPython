@@ -12,7 +12,6 @@ document   = ThisComponent.CurrentController.Frame
 dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
 stroka_dlya_poiska = oSheet_invoice.GetCellByPosition(1,counter).getString()+" "+oSheet_invoice.GetCellByPosition(4,counter).getString()+" "+oSheet_invoice.GetCellByPosition(2,counter).getString()
-ThisComponent.getCurrentController.select(ThisComponent.getSheets().getByName("DB"))'делаем активным лист DB
 searching(stroka_dlya_poiska)
 SearchString = "х"
 ReplaceString = "*"
