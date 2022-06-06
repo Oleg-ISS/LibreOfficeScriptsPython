@@ -1,0 +1,8 @@
+Sub Main
+dim document   as object
+dim oSheet as object
+dim counter as integer
+document   = ThisComponent.CurrentController.Frame 
+oSheet = ThisComponent.Sheets.getByName("Лист1")
+oSheet.GetCellByPosition(1,counter).setString("hello world")
+End Sub
