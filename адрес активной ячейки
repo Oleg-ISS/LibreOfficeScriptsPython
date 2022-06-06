@@ -1,0 +1,10 @@
+REM  *****  BASIC  *****
+
+Sub Main
+Dim oActiveCell as object
+Dim oActiveCellAddress as object
+oActiveCell = ThisComponent.CurrentSelection
+oActiveCellAddress = oActiveCell.getCellAddress() 'передаем адрес активной ячейки как объект
+Print "столбец " + oActiveCellAddress.Column
+Print "строка " + oActiveCellAddress.Row
+End Sub
