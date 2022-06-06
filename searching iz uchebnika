@@ -62,18 +62,6 @@ args1(20).Value = 1
 rem команда поиска строки
 dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
 RetrieveTheActiveCell() 'вызываем функцию показа активной ячейки
-args1(11).Value = stroka_dlya_poiska_2
-dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
-RetrieveTheActiveCell() 'вызываем функцию показа активной ячейки
-rem MsgBox args1(13).Value
-'MsgBox StarDesktop.getImplementationName() rem возвращает полное имя данного объекта
-'MsgBox document.getImplementationName()
-'MsgBox dispatcher.getImplementationName()
-rem MsgBox args1(0).getImplementationName()
-'MsgBox document.DBG_Properties
-'MsgBox document.DBG_methods
-'MsgBox document.DBG_SupportedInterfaces
-
 end sub
 
 
