@@ -4,20 +4,21 @@ Dim oActiveCell as object
 Dim oActiveCellAddress as object
 dim oSheet_DB as object
 dim oSheet_template as object
+dim oSheet_invoice as object
 dim stroka_DB as string
 dim counter as integer 'по умолчанию принимает значение 0
 rem-----------------------------главная процедура
 sub Main
 dim stroka_dlya_poiska as string
 
-dim oSheet_invoice as object
+
 document   = ThisComponent.CurrentController.Frame
 dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
 oSheet_DB = ThisComponent.Sheets.getByName("DB")
 oSheet_template = ThisComponent.Sheets.getByName("template")
 rem-------------------------------начало цикла---------------------
-For counter = 3 To 36
+For counter = 0 To 51
 stroka_dlya_poiska = oSheet_invoice.GetCellByPosition(1,counter).getString()+" "+oSheet_invoice.GetCellByPosition(4,counter).getString()+" "+oSheet_invoice.GetCellByPosition(2,counter).getString()
 searching(stroka_dlya_poiska)
 Next counter
@@ -28,6 +29,7 @@ sub searching(ByVal SearchString as string) 'процедура которая �
 dim Column as integer
 dim Row as long
 dim args1(20) as new com.sun.star.beans.PropertyValue
+stroka_DB = "none"
 args1(0).Name = "SearchItem.StyleFamily"
 args1(0).Value = 2
 args1(1).Name = "SearchItem.CellType"
@@ -70,6 +72,9 @@ args1(19).Name = "SearchItem.SearchFormatted"
 args1(19).Value = false
 args1(20).Name = "SearchItem.AlgorithmType2"
 args1(20).Value = 1
+Do
+	If SearchString = stroka_DB OR  Then
+	
 dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
 oActiveCell = ThisComponent.CurrentSelection
 oActiveCellAddress = oActiveCell.getCellAddress() 'передаем адрес активной ячейки как объект
@@ -79,5 +84,7 @@ stroka_DB = oSheet_DB.GetCellByPosition(Column, Row).getString()
 rem----------------------проверяем правильно или нет нашли строку----------------------
 if SearchString = stroka_DB Then
 oSheet_template.GetCellByPosition(1,counter).setString("yes")
+Else
+oSheet_invoice.GetCellByPosition(8,counter).setString("не найден")
 End If
 end sub
