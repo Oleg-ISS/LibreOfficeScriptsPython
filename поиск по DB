@@ -3,21 +3,21 @@ dim dispatcher as object
 Dim oActiveCell as object
 Dim oActiveCellAddress as object
 dim oSheet_DB as object
+dim oSheet_template as object
 dim stroka_DB as string
+dim counter as integer 'по умолчанию принимает значение 0
 rem-----------------------------главная процедура
 sub Main
 dim stroka_dlya_poiska as string
 
 dim oSheet_invoice as object
-
-dim counter as integer 'по умолчанию принимает значение 0
 document   = ThisComponent.CurrentController.Frame
 dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
 oSheet_DB = ThisComponent.Sheets.getByName("DB")
-
+oSheet_template = ThisComponent.Sheets.getByName("template")
 rem-------------------------------начало цикла---------------------
-For counter = 0 To 36
+For counter = 3 To 36
 stroka_dlya_poiska = oSheet_invoice.GetCellByPosition(1,counter).getString()+" "+oSheet_invoice.GetCellByPosition(4,counter).getString()+" "+oSheet_invoice.GetCellByPosition(2,counter).getString()
 searching(stroka_dlya_poiska)
 Next counter
@@ -25,6 +25,8 @@ rem-------------------------------конец цикла----------------------
 end sub
 rem-----------------------процедура поиска по листу DB
 sub searching(ByVal SearchString as string) 'процедура которая находит строку в листе DB 
+dim Column as integer
+dim Row as long
 dim args1(20) as new com.sun.star.beans.PropertyValue
 args1(0).Name = "SearchItem.StyleFamily"
 args1(0).Value = 2
@@ -71,6 +73,11 @@ args1(20).Value = 1
 dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
 oActiveCell = ThisComponent.CurrentSelection
 oActiveCellAddress = oActiveCell.getCellAddress() 'передаем адрес активной ячейки как объект
-stroka_DB = oSheet_DB.GetCellByPosition(oActiveCellAddress.Column, oActiveCellAddress.Row).getString()
-
+Column = oActiveCellAddress.Column
+Row = oActiveCellAddress.Row
+stroka_DB = oSheet_DB.GetCellByPosition(Column, Row).getString()
+rem----------------------проверяем правильно или нет нашли строку----------------------
+if SearchString = stroka_DB Then
+oSheet_template.GetCellByPosition(1,counter).setString("yes")
+End If
 end sub
