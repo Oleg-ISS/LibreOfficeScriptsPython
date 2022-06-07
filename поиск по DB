@@ -1,12 +1,21 @@
 dim document   as object
 dim dispatcher as object
+Dim oActiveCell as object
+Dim oActiveCellAddress as object
+dim oSheet_DB as object
+dim stroka_DB as string
+rem-----------------------------главная процедура
 sub Main
 dim stroka_dlya_poiska as string
+
 dim oSheet_invoice as object
+
 dim counter as integer 'по умолчанию принимает значение 0
 document   = ThisComponent.CurrentController.Frame
 dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
+oSheet_DB = ThisComponent.Sheets.getByName("DB")
+
 rem-------------------------------начало цикла---------------------
 For counter = 0 To 36
 stroka_dlya_poiska = oSheet_invoice.GetCellByPosition(1,counter).getString()+" "+oSheet_invoice.GetCellByPosition(4,counter).getString()+" "+oSheet_invoice.GetCellByPosition(2,counter).getString()
@@ -60,6 +69,8 @@ args1(19).Value = false
 args1(20).Name = "SearchItem.AlgorithmType2"
 args1(20).Value = 1
 dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
-
+oActiveCell = ThisComponent.CurrentSelection
+oActiveCellAddress = oActiveCell.getCellAddress() 'передаем адрес активной ячейки как объект
+stroka_DB = oSheet_DB.GetCellByPosition(oActiveCellAddress.Column, oActiveCellAddress.Row).getString()
 
 end sub
