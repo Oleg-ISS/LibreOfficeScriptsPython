@@ -1,9 +1,10 @@
+dim document   as object
+dim dispatcher as object
 sub Main
 dim stroka_dlya_poiska as string
-dim dispatcher as object
 dim oSheet_invoice as object
 dim counter as integer 'по умолчанию принимает значение 0
-dim  searching as string
+document   = ThisComponent.CurrentController.Frame
 dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
 rem-------------------------------начало цикла---------------------
