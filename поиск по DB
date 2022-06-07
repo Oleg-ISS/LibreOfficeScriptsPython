@@ -2,18 +2,19 @@ sub Main
 dim stroka_dlya_poiska as string
 dim dispatcher as object
 dim oSheet_invoice as object
-dim counter as integer
+dim counter as integer 'по умолчанию принимает значение 0
 dim  searching as string
-ThisComponent.getCurrentController.select(ThisComponent.getSheets().getByName("DB"))'делаем активным лист invoice
 dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
 oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
 rem-------------------------------начало цикла---------------------
+For counter = 0 To 36
 stroka_dlya_poiska = oSheet_invoice.GetCellByPosition(1,counter).getString()+" "+oSheet_invoice.GetCellByPosition(4,counter).getString()+" "+oSheet_invoice.GetCellByPosition(2,counter).getString()
 searching(stroka_dlya_poiska)
-rem--------------------------------конец цикла---------------------
+Next counter
+rem-------------------------------конец цикла----------------------
 end sub
-sub searching(ByVal SearchString as string) 'процедура которая меняет 
-
+rem-----------------------процедура поиска по листу DB
+sub searching(ByVal SearchString as string) 'процедура которая находит строку в листе DB 
 dim args1(20) as new com.sun.star.beans.PropertyValue
 args1(0).Name = "SearchItem.StyleFamily"
 args1(0).Value = 2
@@ -40,7 +41,7 @@ args1(10).Value = 0
 args1(11).Name = "SearchItem.SearchString"
 args1(11).Value = SearchString
 args1(12).Name = "SearchItem.ReplaceString"
-args1(12).Value = ReplaceString
+args1(12).Value = ""
 args1(13).Name = "SearchItem.Locale"
 args1(13).Value = 255
 args1(14).Name = "SearchItem.ChangedChars"
@@ -58,4 +59,6 @@ args1(19).Value = false
 args1(20).Name = "SearchItem.AlgorithmType2"
 args1(20).Value = 1
 dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
+
+
 end sub
