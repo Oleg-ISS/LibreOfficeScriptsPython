@@ -85,6 +85,6 @@ rem----------------------проверяем правильно или нет н�
 if SearchString = stroka_DB Then
 oSheet_template.GetCellByPosition(1,counter).setString("yes")
 Else
-oSheet_invoice.GetCellByPosition(8,counter).setString("не найден")
+oSheet_invoice.GetCellByPosition(9,counter).setString("не найден")
 End If
 end sub
