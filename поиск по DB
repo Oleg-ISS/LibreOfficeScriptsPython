@@ -23,12 +23,16 @@ stroka_dlya_poiska = oSheet_invoice.GetCellByPosition(1,counter).getString()+" "
 searching(stroka_dlya_poiska)
 Next counter
 rem-------------------------------конец цикла----------------------
+Msgbox "Работа программы завершена"
 end sub
 rem-----------------------процедура поиска по листу DB
 sub searching(ByVal SearchString as string) 'процедура которая находит строку в листе DB 
 dim Column as integer
 dim Row as long
+dim schetchik as integer
 dim args1(20) as new com.sun.star.beans.PropertyValue
+dim nomer as string
+
 stroka_DB = "none"
 args1(0).Name = "SearchItem.StyleFamily"
 args1(0).Value = 2
@@ -73,18 +77,23 @@ args1(19).Value = false
 args1(20).Name = "SearchItem.AlgorithmType2"
 args1(20).Value = 1
 Do
-	If SearchString = stroka_DB OR  Then
-	
-dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
-oActiveCell = ThisComponent.CurrentSelection
-oActiveCellAddress = oActiveCell.getCellAddress() 'передаем адрес активной ячейки как объект
-Column = oActiveCellAddress.Column
-Row = oActiveCellAddress.Row
-stroka_DB = oSheet_DB.GetCellByPosition(Column, Row).getString()
-rem----------------------проверяем правильно или нет нашли строку----------------------
-if SearchString = stroka_DB Then
-oSheet_template.GetCellByPosition(1,counter).setString("yes")
+	schetchik = Row
+    dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
+    oActiveCell = ThisComponent.CurrentSelection
+	oActiveCellAddress = oActiveCell.getCellAddress() 'передаем адрес активной ячейки как объект
+    Row = oActiveCellAddress.Row
+    Column = oActiveCellAddress.Column
+    stroka_DB = oSheet_DB.GetCellByPosition(Column, Row).getString()
+    rem----------------------проверяем правильно или нет нашли строку----------------------
+	If SearchString = stroka_DB Then
+		nomer = oSheet_DB.GetCellByPosition(Column-1, Row).getString()
+		oSheet_template.GetCellByPosition(0,counter).setString(nomer)
+		oSheet_template.GetCellByPosition(1,counter).setString(stroka_DB)
+	Exit Do
+	End If
+Loop While  Row >= schetchik
+If SearchString = stroka_DB Then	
 Else
-oSheet_invoice.GetCellByPosition(9,counter).setString("не найден")
+oSheet_invoice.GetCellByPosition(8,counter).setString("не найден")
 End If
 end sub
