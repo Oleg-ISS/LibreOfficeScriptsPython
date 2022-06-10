@@ -29,7 +29,7 @@ rem-----------------------процедура поиска по листу DB
 sub searching(ByVal SearchString as string) 'процедура которая находит строку в листе DB 
 dim Column as integer
 dim Row as long
-dim schetchik as integer
+dim schetchik as long
 dim args1(20) as new com.sun.star.beans.PropertyValue
 dim nomer as string
 
