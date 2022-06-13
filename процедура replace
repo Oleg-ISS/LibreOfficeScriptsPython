@@ -18,6 +18,9 @@ replace(SearchString, ReplaceString)
 SearchString = "х"
 ReplaceString = "*"
 replace(SearchString, ReplaceString)
+SearchString = "x"
+ReplaceString = "*"
+replace(SearchString, ReplaceString)
 SearchString = "O-ring cord"
 ReplaceString = "Шнур круглого сечения"
 replace(SearchString, ReplaceString)
