@@ -77,11 +77,14 @@ args1(19).Value = false
 args1(20).Name = "SearchItem.AlgorithmType2"
 args1(20).Value = 1
 Do
-	schetchik = Row
+    schetchik = Row
     dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
     oActiveCell = ThisComponent.CurrentSelection
 	oActiveCellAddress = oActiveCell.getCellAddress() 'передаем адрес активной ячейки как объект
     Row = oActiveCellAddress.Row
+    if schetchik = Row Then
+    Exit Do
+    End if
     Column = oActiveCellAddress.Column
     stroka_DB = oSheet_DB.GetCellByPosition(Column, Row).getString()
     rem----------------------проверяем правильно или нет нашли строку----------------------
