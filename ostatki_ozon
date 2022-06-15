@@ -1,6 +1,16 @@
+REM  *****  BASIC  *****
+
 Sub Main
 Dim SearchStringFromMain as string
 SearchStringFromMain = "-[0-9]{5}"
+searching(SearchStringFromMain)
+SearchStringFromMain = "-[0-9]{4}"
+searching(SearchStringFromMain)
+SearchStringFromMain = "-[0-9]{3}"
+searching(SearchStringFromMain)
+SearchStringFromMain = "-[0-9]{2}"
+searching(SearchStringFromMain)
+SearchStringFromMain = "-[0-9]{1}"
 searching(SearchStringFromMain)
 End Sub
 
@@ -40,7 +50,7 @@ args1(9).Value = 1
 args1(10).Name = "SearchItem.SearchFlags"
 args1(10).Value = 65536
 args1(11).Name = "SearchItem.SearchString"
-args1(11).Value = "-[0-9]{5}"
+args1(11).Value = SearchString
 args1(12).Name = "SearchItem.ReplaceString"
 args1(12).Value = "0"
 args1(13).Name = "SearchItem.Locale"
