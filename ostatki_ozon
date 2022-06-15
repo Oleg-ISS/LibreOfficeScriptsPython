@@ -1,6 +1,7 @@
-REM  *****  BASIC  *****
 
-Sub Main
+
+sub Main
+REM  *****  BASIC  *****
 Dim SearchStringFromMain as string
 SearchStringFromMain = "-[0-9]{5}"
 searching(SearchStringFromMain)
@@ -15,7 +16,7 @@ searching(SearchStringFromMain)
 End Sub
 
 
-sub searching(ByVal SearchString as string,)
+sub searching(ByVal SearchString as string)
 rem ----------------------------------------------------------------------
 rem define variables
 dim document   as object
