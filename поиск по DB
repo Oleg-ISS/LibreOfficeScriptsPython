@@ -96,6 +96,6 @@ Do
 Loop While  Row >= schetchik
 If SearchString = stroka_DB Then	
 Else
-oSheet_invoice.GetCellByPosition(8,counter).setString("не найден")
+oSheet_invoice.GetCellByPosition(10,counter).setString("не найден")
 End If
 end sub
