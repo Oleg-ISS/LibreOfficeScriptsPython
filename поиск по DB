@@ -9,7 +9,7 @@ dim stroka_DB as string
 dim counter as integer 'по умолчанию принимает значение 0
 rem-----------------------------главная процедура
 sub Main
-Msgbox "Перед выполнением поиска, проверь активный лист DB!"
+Msgbox "Перед выполнением поиска, проверь активный лист DB! Установи число строк листа invoice
 dim stroka_dlya_poiska as string
 document   = ThisComponent.CurrentController.Frame
 dispatcher = createUnoService("com.sun.star.frame.DispatchHelper")
