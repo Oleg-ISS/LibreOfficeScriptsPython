@@ -1,0 +1,12 @@
+sub Main 'главная функция
+dim counter as long 'переменная в которой храним номер строки для цикла
+dim oSheet_DB as object 'переменная в которой храним лист invoice
+dim stroka_DB as string
+oSheet_DB = ThisComponent.Sheets.getByName("DB")
+For counter = 0 To 128854 'главный цикл, который шагает по строчкам листа invoice
+stroka_DB = oSheet_DB.GetCellByPosition(4,counter).getString()
+if stroka_DB = "Шнур прямоугольного сечения Silicone 8*10 FDA" Then
+	Msgbox "find"
+	End if
+Next counter
+End Sub
