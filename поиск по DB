@@ -18,7 +18,7 @@ oSheet_DB = ThisComponent.Sheets.getByName("DB")
 oSheet_template = ThisComponent.Sheets.getByName("template")
 rem-------------------------------начало цикла---------------------
 For counter = 0 To 51
-stroka_dlya_poiska = ".*"+oSheet_invoice.GetCellByPosition(1,counter).getString()+".*"+oSheet_invoice.GetCellByPosition(4,counter).getString()+".*"+oSheet_invoice.GetCellByPosition(2,counter).getString()+".*"
+stroka_dlya_poiska = oSheet_invoice.GetCellByPosition(1,counter).getString()+" "+oSheet_invoice.GetCellByPosition(4,counter).getString()+" "+oSheet_invoice.GetCellByPosition(2,counter).getString()
 searching(stroka_dlya_poiska)
 Next counter
 rem-------------------------------конец цикла----------------------
@@ -33,6 +33,7 @@ dim args1(20) as new com.sun.star.beans.PropertyValue
 dim nomer as string
 
 stroka_DB = "none"
+dim args1(20) as new com.sun.star.beans.PropertyValue
 args1(0).Name = "SearchItem.StyleFamily"
 args1(0).Value = 2
 args1(1).Name = "SearchItem.CellType"
@@ -52,11 +53,11 @@ args1(7).Value = false
 args1(8).Name = "SearchItem.AsianOptions"
 args1(8).Value = false
 args1(9).Name = "SearchItem.AlgorithmType"
-args1(9).Value = 1
+args1(9).Value = 0
 args1(10).Name = "SearchItem.SearchFlags"
-args1(10).Value = 65536
+args1(10).Value = 71680
 args1(11).Name = "SearchItem.SearchString"
-args1(11).Value = "Ma.*ry"
+args1(11).Value = SearchString
 args1(12).Name = "SearchItem.ReplaceString"
 args1(12).Value = ""
 args1(13).Name = "SearchItem.Locale"
@@ -74,7 +75,7 @@ args1(18).Value = 1
 args1(19).Name = "SearchItem.SearchFormatted"
 args1(19).Value = false
 args1(20).Name = "SearchItem.AlgorithmType2"
-args1(20).Value = 2
+args1(20).Value = 1
 Do
     schetchik = Row
     dispatcher.executeDispatch(document, ".uno:ExecuteSearch", "", 0, args1())
