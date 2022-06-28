@@ -1,12 +1,41 @@
-sub Main 'главная функция
-dim counter as long 'переменная в которой храним номер строки для цикла
-dim oSheet_DB as object 'переменная в которой храним лист invoice
+dim document   as object
+dim dispatcher as object
+Dim oActiveCell as object
+Dim oActiveCellAddress as object
+dim oSheet_DB as object
+dim oSheet_template as object
+dim oSheet_invoice as object
 dim stroka_DB as string
+dim counter as integer 'по умолчанию принимает значение 0
+rem-----------------------------главная процедура
+sub Main
+Msgbox "Перед выполнением поиска, проверь активный лист DB! Установи число строк листа invoice"
+dim stroka_dlya_poiska as string
+document   = ThisComponent.CurrentController.Frame
+
+oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
 oSheet_DB = ThisComponent.Sheets.getByName("DB")
-For counter = 0 To 128854 'главный цикл, который шагает по строчкам листа invoice
-stroka_DB = oSheet_DB.GetCellByPosition(4,counter).getString()
-if stroka_DB = "Шнур прямоугольного сечения Silicone 8*10 FDA" Then
-	Msgbox "find"
-	End if
+oSheet_template = ThisComponent.Sheets.getByName("template")
+rem-------------------------------начало цикла---------------------
+For counter = 0 To 210
+stroka_dlya_poiska = oSheet_invoice.GetCellByPosition(1,counter).getString()+" "+oSheet_invoice.GetCellByPosition(4,counter).getString()+" "+oSheet_invoice.GetCellByPosition(2,counter).getString()
+searching(stroka_dlya_poiska)
 Next counter
-End Sub
+rem-------------------------------конец цикла----------------------
+Msgbox "Работа программы завершена"
+end sub
+rem-----------------------процедура поиска по листу DB
+sub searching(ByVal SearchString as string) 'процедура которая находит строку в листе DB 
+dim nomer as string
+dim counter_DB as long 'переменная в которой храним номер строки для цикла
+rem dim oSheet_DB as object 'переменная в которой храним лист invoice
+rem dim stroka_DB as string
+For counter_DB = 0 To 128854 'главный цикл, который шагает по строчкам листа DB
+stroka_DB = oSheet_DB.GetCellByPosition(4,counter_DB).getString()
+if stroka_DB = SearchString Then
+	nomer = oSheet_DB.GetCellByPosition(3, counter_DB).getString()
+	oSheet_invoice.GetCellByPosition(11,counter).setString(nomer)
+	Exit For
+	End if
+Next counter_DB
+end sub
