@@ -17,7 +17,7 @@ oSheet_invoice = ThisComponent.Sheets.getByName("invoice")
 oSheet_DB = ThisComponent.Sheets.getByName("DB")
 oSheet_template = ThisComponent.Sheets.getByName("template")
 rem-------------------------------начало цикла---------------------
-For counter = 0 To 51
+For counter = 0 To 1
 stroka_dlya_poiska = oSheet_invoice.GetCellByPosition(1,counter).getString()+" "+oSheet_invoice.GetCellByPosition(4,counter).getString()+" "+oSheet_invoice.GetCellByPosition(2,counter).getString()
 searching(stroka_dlya_poiska)
 Next counter
