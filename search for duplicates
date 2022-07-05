@@ -1,1 +1,24 @@
+Rem нужен файл в котором будут два листи DB, duplicates
+sub Main
+Dim counter, internal, counter_internal as long
+Dim oSheet_DB, oSheet_duplicates as object
+Dim stroka_dlya_poiska, stroka_dlya_poiska_internal, nomer as string
+oSheet_DB = ThisComponent.Sheets.getByName("DB")
+oSheet_duplicates = ThisComponent.Sheets.getByName("duplicates")
+Rem главный цикл
 
+For counter = 0 To 127157
+  stroka_dlya_poiska = oSheet_DB.GetCellByPosition(4,counter).getString()
+  Rem Вложенный цикл
+  internal = counter + 1 Rem это для того чтобы искать не с первой строчки
+  For internal To 127157
+  stroka_dlya_poiska_internal = oSheet_DB.GetCellByPosition(4,internal).getString()
+  nomer = oSheet_DB.GetCellByPosition(3, internal).getString()
+  if stroka_dlya_poiska = stroka_dlya_poiska_internal Then
+    oSheet_duplicates.GetCellByPosition(1,counter_internal).setString(stroka_dlya_poiska_internal)
+    oSheet_duplicates.GetCellByPosition(0,counter_internal).setString(nomer)
+    counter_internal = counter_internal + 1
+  End if  
+  Next internal
+Next counter
+end sub
