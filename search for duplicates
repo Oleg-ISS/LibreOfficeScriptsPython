@@ -5,9 +5,11 @@ Dim oSheet_DB, oSheet_duplicates as object
 Dim stroka_dlya_poiska, stroka_dlya_poiska_internal, nomer as string
 oSheet_DB = ThisComponent.Sheets.getByName("DB")
 oSheet_duplicates = ThisComponent.Sheets.getByName("duplicates")
-oSheet_duplicates.GetCellByPosition(4,counter_internal).setString("Программа начала работу")
+oSheet_duplicates.GetCellByPosition(4,1).setString("Программа начала работу")
 Rem главный цикл
 For counter = 0 To 127157
+  oSheet_duplicates.GetCellByPosition(5,1).setString("Цикл")
+  oSheet_duplicates.GetCellByPosition(6,1).setString(counter)
   stroka_dlya_poiska = oSheet_DB.GetCellByPosition(4,counter).getString()
   Rem Вложенный цикл
   rem internal = counter + 1 Rem это для того чтобы искать не с первой строчки
