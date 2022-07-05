@@ -23,7 +23,7 @@ For counter = 0 To 127157
   End if
   if internal = 127157 Then
   oSheet_duplicates.GetCellByPosition(2,counter_internal).setString("Номер цикла")
-  oSheet_duplicates.GetCellByPosition(3,counter_internal).setString(counter_internal)
+  oSheet_duplicates.GetCellByPosition(3,counter_internal).setString(counter)
   End if
   Next internal
 Next counter
