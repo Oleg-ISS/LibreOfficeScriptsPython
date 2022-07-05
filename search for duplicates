@@ -18,9 +18,14 @@ For counter = 0 To 127157
   stroka_dlya_poiska_internal = oSheet_DB.GetCellByPosition(4,internal).getString()
   
   if stroka_dlya_poiska = stroka_dlya_poiska_internal Then
-    nomer = oSheet_DB.GetCellByPosition(3, internal).getString()
-    oSheet_duplicates.GetCellByPosition(1,counter_internal).setString(stroka_dlya_poiska_internal)
+    nomer = oSheet_DB.GetCellByPosition(3, counter).getString()
     oSheet_duplicates.GetCellByPosition(0,counter_internal).setString(nomer)
+    oSheet_duplicates.GetCellByPosition(1,counter_internal).setString(stroka_dlya_poiska)
+    
+    nomer = oSheet_DB.GetCellByPosition(3, internal).getString()
+    oSheet_duplicates.GetCellByPosition(2,counter_internal).setString(nomer)
+    oSheet_duplicates.GetCellByPosition(3,counter_internal).setString(stroka_dlya_poiska_internal)
+    
     counter_internal = counter_internal + 1
   End if
   Next internal
